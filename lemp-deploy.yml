@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: lemp
+  name: lemp
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lemp
+  template:
+    metadata:
+      labels:
+        app: lemp
+    spec:
+      containers:
+      - image: nginx:1.28
+        name: nginx
+      - image: php:8.2-fpm
+        name: php
