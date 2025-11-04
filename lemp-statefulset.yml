@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: lemp
+  name: lemp
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: lemp
+  template:
+    metadata:
+      labels:
+        app: lemp
+        env: dev
+    spec:
+      containers:
+      - image: nginx:1.28
+        name: nginx
