@@ -20,5 +20,13 @@ spec:
         env:
           - name: STAGE
             value: K8S
+          - name: PODIP
+            valueFrom:
+              fieldRef:
+                fieldPath: status.podIP
+          - name: NODE
+            valueFrom:
+              fieldRef:
+                fieldPath: spec.nodeName
       - image: php:8.2-fpm
         name: php
