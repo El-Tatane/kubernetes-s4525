@@ -8,7 +8,7 @@ spec:
   containers:
   - image: nginx:1.28
     name: nginx
-  - image: php:8.2-fpm
+  - image: php:8.4-fpm-alpine
     name: php
   dnsPolicy: ClusterFirst
   restartPolicy: Always
