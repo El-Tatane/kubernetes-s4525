@@ -11,4 +11,4 @@ spec:
   - image: php:8.4-fpm-alpine
     name: php
   dnsPolicy: ClusterFirst
-  restartPolicy: Always
+  restartPolicy: OnFailure
