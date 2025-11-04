@@ -28,5 +28,10 @@ spec:
             valueFrom:
               fieldRef:
                 fieldPath: spec.nodeName
+          - name: LEVEL
+            valueFrom:
+              configMapKeyRef:
+                name: nginx-env
+                key: NIVEAU
       - image: php:8.2-fpm
         name: php
