@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  JOURS: "3"
+  NIVEAU: Initiation
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: nginx-env
