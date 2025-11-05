@@ -21,10 +21,10 @@ spec:
           volumeMounts:
             - mountPath: /usr/share/nginx/html
               name: nginx
-              subPath: nginx-conf
-            - mountPath: /etc/nginx/conf.d
-              name: nginx
               subPath: html
+            
+            - mountPath: /etc/nginx/conf.d
+              name: nginx-conf
 
         - image: php:8.2-fpm
           name: php
@@ -37,6 +37,9 @@ spec:
         - name: nginx
           hostPath:
             path: /home/stagiaire/data/
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
 status: {}
 
 #  k create deployment test --image bob2606/hello-http:0.8.33 --replicas 2 --dry-run=client -o yaml > deployement.yaml
