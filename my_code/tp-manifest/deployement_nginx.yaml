@@ -18,7 +18,9 @@ spec:
       containers:
       - image: nginx
         name: nginx
-        resources: {}
+      - image: php:8.2-fpm
+        name: php
+
 status: {}
 
 #  k create deployment test --image bob2606/hello-http:0.8.33 --replicas 2 --dry-run=client -o yaml > deployement.yaml
