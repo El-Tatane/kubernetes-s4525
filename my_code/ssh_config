@@ -1,0 +1,19 @@
+# Controle Plan
+Host k8s-cp1
+    HostName 192.168.56.150
+    User stagiaire
+
+# WK-1
+Host k8s-wk1
+    HostName 192.168.56.151
+    User stagiaire
+
+# WK-2
+Host k8s-wk2
+    HostName 192.168.56.152
+    User stagiaire
+
+# Client
+Host k8s-clt
+    HostName 192.168.56.200
+    User stagiaire
