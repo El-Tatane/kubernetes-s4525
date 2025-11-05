@@ -6,7 +6,7 @@ metadata:
     app: hello
   name: hello
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: hello
@@ -31,5 +31,17 @@ spec:
         ports:
           - name: http
             containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /livez
+            port: 80
+          periodSeconds: 15
+          failureThreshold: 2
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          periodSeconds: 5
+          failureThreshold: 3
         resources: {}
 status: {}
