@@ -38,5 +38,8 @@ spec:
               secretKeyRef:
                 name: test
                 key: PASSWD
+        envFrom:
+          - configMapRef:
+              name: nginx-env
       - image: php:8.2-fpm
         name: php
