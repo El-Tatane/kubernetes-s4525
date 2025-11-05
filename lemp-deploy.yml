@@ -33,5 +33,10 @@ spec:
               configMapKeyRef:
                 name: nginx-env
                 key: NIVEAU
+          - name: PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: test
+                key: PASSWD
       - image: php:8.2-fpm
         name: php
