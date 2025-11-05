@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  MSG: Micro-TP n°6
+  PORT: "80"
+  VERSION: "6"
+kind: ConfigMap
+metadata:
+  creationTimestamp: null
+  name: hello-http

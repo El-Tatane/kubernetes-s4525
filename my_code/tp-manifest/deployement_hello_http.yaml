@@ -19,6 +19,17 @@ spec:
       - image: bob2606/hello-http:0.8.33
         name: hello-http
         resources: {}
+        ports:
+        - name: http
+          containerPort: 80
+        env: 
+        - name: NODE
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        envFrom:
+          - configMapRef:
+              name: hello-http
 status: {}
 
 #  k create deployment test --image bob2606/hello-http:0.8.33 --replicas 2 --dry-run=client -o yaml > deployement.yaml
