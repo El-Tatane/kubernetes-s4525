@@ -5,7 +5,7 @@ metadata:
     app: hello-http
   name: hello-http
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: hello-http
@@ -30,6 +30,19 @@ spec:
         envFrom:
           - configMapRef:
               name: hello-http
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          periodSeconds: 5
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /livez
+            port: 80
+          periodSeconds: 15
+          failureThreshold: 2
+
 status: {}
 
 #  k create deployment test --image bob2606/hello-http:0.8.33 --replicas 2 --dry-run=client -o yaml > deployement.yaml
