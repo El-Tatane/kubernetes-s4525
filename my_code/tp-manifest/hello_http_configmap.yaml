@@ -5,5 +5,4 @@ data:
   VERSION: "6"
 kind: ConfigMap
 metadata:
-  creationTimestamp: null
   name: hello-http
