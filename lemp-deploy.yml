@@ -44,5 +44,17 @@ spec:
           - configMapRef:
               name: nginx-env
             prefix: bob_
+        livenessProbe:
+          httpGet:
+            port: 80
+            path: /index.html 
+          periodSeconds: 10
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            port: 80
+            path: /index.html 
+          periodSeconds: 5
+          failureThreshold: 2
       - image: php:8.2-fpm
         name: php
