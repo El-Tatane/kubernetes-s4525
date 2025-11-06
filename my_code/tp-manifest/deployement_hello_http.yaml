@@ -42,7 +42,13 @@ spec:
             port: 80
           periodSeconds: 15
           failureThreshold: 2
-
+        volumeMounts:
+          - name: status
+            mountPath: /var/lib/hello-http/status
+      volumes:
+        - name: status
+          hostPath:
+            path: /home/stagiaire/data/status
 status: {}
 
 #  k create deployment test --image bob2606/hello-http:0.8.33 --replicas 2 --dry-run=client -o yaml > deployement.yaml
