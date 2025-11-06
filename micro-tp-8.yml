@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: hello
+  name: hello
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: hello
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: hello
+    spec:
+      containers:
+        - image: bob2606/hello-http:0.8.33
+          name: hello-http
+          envFrom:
+            - configMapRef:
+                name: hello-env
+          ports:
+            - name: http
+              containerPort: 80
+          volumeMounts:
+            - mountPath: /var/lib/hello-http
+              name: status
+
+      volumes:
+        - name: status
+          hostPath:
+            path: /home/stagiaire/data
+            type: Directory
