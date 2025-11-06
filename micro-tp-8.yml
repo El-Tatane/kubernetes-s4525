@@ -1,16 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  annotations:
+    kubernetes.io/change-cause: tag:0.8.33
   creationTimestamp: null
   labels:
     app: hello
+    env: dev
   name: hello
+  namespace: default
 spec:
-  replicas: 2
+  replicas: 10
   selector:
     matchLabels:
       app: hello
-  strategy: {}
+  strategy:
+    type: Recreate
   template:
     metadata:
       creationTimestamp: null
@@ -20,12 +25,15 @@ spec:
       containers:
         - image: bob2606/hello-http:0.8.33
           name: hello-http
+          env:
+            - name: VAR
+              value: VAL_4
           envFrom:
             - configMapRef:
                 name: hello-env
           ports:
-            - name: http
-              containerPort: 80
+            - name: https
+              containerPort: 443
           volumeMounts:
             - mountPath: /var/lib/hello-http
               name: status
