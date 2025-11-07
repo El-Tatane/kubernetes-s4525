@@ -10,9 +10,9 @@ spec:
     port: 80
     protocol: TCP
     targetPort: 80
-    nodePort: 32500
+    # nodePort: 32500
   selector:
     app: nginx
-  type: NodePort
+  type: ClusterIP
 status:
   loadBalancer: {}

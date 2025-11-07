@@ -10,9 +10,9 @@ spec:
     port: 80
     protocol: TCP
     targetPort: http
-    nodePort: 32149
+  #  nodePort: 32149
   selector:
     app: hello-http
-  type: NodePort
+  type: ClusterIP
 status:
   loadBalancer: {}

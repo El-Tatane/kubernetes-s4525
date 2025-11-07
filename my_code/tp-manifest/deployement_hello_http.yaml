@@ -44,11 +44,11 @@ spec:
           failureThreshold: 2
         volumeMounts:
           - name: status
-            mountPath: /var/lib/hello-http/status
+            mountPath: /var/lib/hello-http
       volumes:
         - name: status
           hostPath:
-            path: /home/stagiaire/data/status
+            path: /home/stagiaire/data
 status: {}
 
 #  k create deployment test --image bob2606/hello-http:0.8.33 --replicas 2 --dry-run=client -o yaml > deployement.yaml
