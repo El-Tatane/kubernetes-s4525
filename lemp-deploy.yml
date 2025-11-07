@@ -15,46 +15,63 @@ spec:
         app: lemp
     spec:
       containers:
-      - image: nginx:1.28
-        name: nginx
-        env:
-          - name: STAGE
-            value: K8S
-          - name: JOURS
-            value: "10"
-          - name: PODIP
-            valueFrom:
-              fieldRef:
-                fieldPath: status.podIP
-          - name: NODE
-            valueFrom:
-              fieldRef:
-                fieldPath: spec.nodeName
-          - name: LEVEL
-            valueFrom:
-              configMapKeyRef:
+        - image: nginx:1.28
+          name: nginx
+          env:
+            - name: STAGE
+              value: K8S
+            - name: JOURS
+              value: "10"
+            - name: PODIP
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+            - name: NODE
+              valueFrom:
+                fieldRef:
+                  fieldPath: spec.nodeName
+            - name: LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: nginx-env
+                  key: NIVEAU
+            - name: PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: test
+                  key: PASSWD
+          envFrom:
+            - configMapRef:
                 name: nginx-env
-                key: NIVEAU
-          - name: PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: test
-                key: PASSWD
-        envFrom:
-          - configMapRef:
-              name: nginx-env
-            prefix: bob_
-        livenessProbe:
-          httpGet:
-            port: 80
-            path: /index.html 
-          periodSeconds: 10
-          failureThreshold: 3
-        readinessProbe:
-          httpGet:
-            port: 80
-            path: /index.html 
-          periodSeconds: 5
-          failureThreshold: 2
-      - image: php:8.2-fpm
-        name: php
+              prefix: bob_
+          livenessProbe:
+            httpGet:
+              port: 80
+              path: /index.html
+            periodSeconds: 10
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              port: 80
+              path: /index.html
+            periodSeconds: 5
+            failureThreshold: 2
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: lemp
+              subPath: html
+            - mountPath: /etc/nginx/conf.d
+              name: lemp
+              subPath: nginx-conf
+        - image: php:8.2-fpm
+          name: php
+          volumeMounts:
+            - name: lemp
+              mountPath: /var/www/html
+              subPath: html
+
+      volumes:
+        - name: lemp
+          hostPath:
+            path: /home/stagiaire/data
+            type: Directory
