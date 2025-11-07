@@ -16,9 +16,30 @@ spec:
         app: nginx
     spec:
       containers:
-      - image: nginx
-        name: nginx
-        resources: {}
+        - image: nginx
+          name: nginx
+          volumeMounts:
+            - mountPath: /usr/share/nginx/html
+              name: nginx
+              subPath: html
+            
+            - mountPath: /etc/nginx/conf.d
+              name: nginx-conf
+
+        - image: php:8.2-fpm
+          name: php
+          volumeMounts:
+            - name: nginx
+              mountPath: /var/www/html
+              subPath: html
+          
+      volumes:
+        - name: nginx
+          hostPath:
+            path: /home/stagiaire/data/
+        - name: nginx-conf
+          configMap:
+            name: nginx-conf
 status: {}
 
 #  k create deployment test --image bob2606/hello-http:0.8.33 --replicas 2 --dry-run=client -o yaml > deployement.yaml

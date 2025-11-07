@@ -5,7 +5,7 @@ metadata:
     app: hello-http
   name: hello-http
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: hello-http
@@ -19,6 +19,36 @@ spec:
       - image: bob2606/hello-http:0.8.33
         name: hello-http
         resources: {}
+        ports:
+        - name: http
+          containerPort: 80
+        env: 
+        - name: NODE
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        envFrom:
+          - configMapRef:
+              name: hello-http
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          periodSeconds: 5
+          failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /livez
+            port: 80
+          periodSeconds: 15
+          failureThreshold: 2
+        volumeMounts:
+          - name: status
+            mountPath: /var/lib/hello-http
+      volumes:
+        - name: status
+          hostPath:
+            path: /home/stagiaire/data
 status: {}
 
 #  k create deployment test --image bob2606/hello-http:0.8.33 --replicas 2 --dry-run=client -o yaml > deployement.yaml
