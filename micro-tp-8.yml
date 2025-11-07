@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kubernetes.io/change-cause: tag:0.8.33
+  creationTimestamp: null
+  labels:
+    app: hello
+    env: dev
+  name: hello
+  namespace: default
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: hello
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: hello
+    spec:
+      containers:
+        - image: bob2606/hello-http:0.8.33
+          name: hello-http
+          env:
+            - name: VAR
+              value: VAL_6
+          envFrom:
+            - configMapRef:
+                name: hello-env
+          ports:
+            - name: https
+              containerPort: 443
+          volumeMounts:
+            - mountPath: /var/lib/hello-http
+              name: status
+
+      volumes:
+        - name: status
+          hostPath:
+            path: /home/stagiaire/data
+            type: Directory
